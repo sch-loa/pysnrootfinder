@@ -1,5 +1,7 @@
 from Equation import Expression
+
 from algorithms import newton_mas_secante
+from exceptions import validate_err, validate_range
 
 msg =  """
  _________________________________
@@ -13,7 +15,6 @@ msg =  """
   FUNCION A EVALUAR:
   |_ f(x) = x^(3)-6x^(2)+11x-6
     |_ f'(x) = 3x^(2)-12x+11
-
         """
 
 print(msg)
@@ -28,7 +29,9 @@ fxp = Expression('3x^(2)-12x+11', ['x'])
 print('RANGO INICIAL DE BUSQUEDA:')
 x0 = float(input('|_ x0: '))
 x1 = float(input('|_ x1: '))
-error = float(input("MARGEN DE ERROR: "))
+validate_range(x0, x1) # Valido que el rango sea válido.
+err = float(input("MARGEN DE ERROR: "))
+validate_err(err, 'MARGEN DE ERROR') # Valido que el margen de error sea mayor a cero.
 
 # Se verifica que ninguno de los valores de x proporcionados sea una raíz de la función.
 print() # Hago salgo de línea
@@ -38,7 +41,7 @@ elif(fx(x1) == 0):
     print(f"El valor proporcionado {x1} es una raíz")
 else :
     #Se imprimen los valores recibidos en caso de que no lo sean
-    tabla, raiz = newton_mas_secante(fx, fxp, x0, x1, error)
+    tabla, raiz = newton_mas_secante(fx, fxp, x0, x1, err)
 
     print(tabla)
     print("\nAproximación final de la raíz: ", raiz)

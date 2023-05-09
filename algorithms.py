@@ -1,6 +1,5 @@
 from Equation import Expression
 import pandas as pd
-from exceptions import is_positive
 
 # Combina los algoritmos de la secante y newton-raphson
 def newton_mas_secante(fx, fxp, x0, x1, err):
@@ -10,12 +9,10 @@ def newton_mas_secante(fx, fxp, x0, x1, err):
         'Raíz Aproximada',
         'Método Aplicado'
         ])
-
+    
+    err = margen_menor_a_error_absoluto(err, x0, x1) # Si la cota es inicialmente menor al error absoluto le asigno ese valor para que se ejecute el bucle
     
     c = 1 # Contador de la iteración
-    validar_margen_de_error(err) # Valido que el margen de error sea mayor a cero.
-    err = margen_menor_a_error_absoluto(err, x0, x1) # Si la cota es inicialmente menor al error absoluto le asigno ese valor para que se ejecute el bucle
-
     condicion = lambda p0, p1 : error_absoluto(p0,p1) < err or fx(p0) == 0 or fx(p1) == 0 # Condicion de parada
     while(not condicion(x0,x1)):
         datos, x0, x1 = secante(datos,fx, x0, x1, c) # Recibe datos actualizados y nuevo x0, x1
@@ -63,9 +60,6 @@ def actualizar_dataframe(df, iter, puntos, raiz, funcion):
     } , index = range(1))
    
     return pd.concat([df, dic], axis = 0, ignore_index = True)
-
-def validar_margen_de_error(err):
-    is_positive(err, 'MARGEN DE ERROR')
 
 def margen_menor_a_error_absoluto(err, x0, x1):
     err_abs = error_absoluto(x0,x1)
