@@ -5,7 +5,7 @@ import pandas as pd
 def newton_mas_secante(fx, fxp, x0, x1, err):
     datos = pd.DataFrame(columns = [
         'Iteración',
-        'Intervalo/Valores',
+        'Valores Intermedios',
         'Raíz Aproximada',
         'Método Aplicado'
         ])
@@ -25,7 +25,7 @@ def newton_mas_secante(fx, fxp, x0, x1, err):
         datos, x0, x1 = newtonraphson(datos,fx,fxp,x1,c) # Recibe datos actualizados y nuevo x0, x1
         c += 1
 
-    return (datos.to_string(index = False), x1)
+    return (datos, x1)
 
 def newtonraphson(df,fx,fxp,p0,count):
     p1 = p0 - (fx(p0))/fxp(p0)
@@ -35,18 +35,18 @@ def newtonraphson(df,fx,fxp,p0,count):
     return (df, p0, p1)
 
 def secante(df,fx,p0,p1,count):
-    dividendo = fx(p0) - fx(p1)
+    dividendo = fx(p1) - fx(p0)
 
     # Para evitar una división por cero se le suma una cantidad mínima al dividendo
     # en caso de ser cero para evitar errores pero a la vez no perjudicar el cálculo.
     if(dividendo == 0):
         dividendo = 10*-10
 
-    p2 = p0 - (fx(p0)*(p0-p1)) / dividendo
+    p2 = p1 - (fx(p1)*(p1-p0)) / dividendo
 
     df = actualizar_dataframe(df, count, "({},{})".format(round(p0,4),round(p1,4)), round(p2,4), 'Secante')
 
-    return (df, p0,p2)
+    return (df, p1,p2)
 
 def error_absoluto(x0, x1):
     return abs(x1 - x0)
@@ -54,7 +54,7 @@ def error_absoluto(x0, x1):
 def actualizar_dataframe(df, iter, puntos, raiz, funcion):
     dic = pd.DataFrame({
         'Iteración': iter,
-        'Intervalo/Valores': puntos,
+        'Valores Intermedios': puntos,
         'Raíz Aproximada': raiz,
         'Método Aplicado': funcion
     } , index = range(1))
