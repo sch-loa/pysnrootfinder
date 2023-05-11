@@ -13,7 +13,7 @@ def newton_mas_secante(fx, fxp, x0, x1, err):
     err = margen_menor_a_error_absoluto(err, x0, x1) # Si la cota es inicialmente menor al error absoluto le asigno ese valor para que se ejecute el bucle
     
     c = 1 # Contador de la iteración
-    condicion = lambda p0, p1 : error_absoluto(p0,p1) < err or fx(p0) == 0 or fx(p1) == 0 # Condicion de parada
+    condicion = lambda p0, p1 : error_absoluto(p0,p1) < err or error_absoluto(p0,p1) == 0 or fx(p0) == 0 or fx(p1) == 0 # Condicion de parada
     while(not condicion(x0,x1)):
         datos, x0, x1 = secante(datos,fx, x0, x1, c) # Recibe datos actualizados y nuevo x0, x1
         c += 1
@@ -64,5 +64,7 @@ def actualizar_dataframe(df, iter, puntos, raiz, funcion):
 def margen_menor_a_error_absoluto(err, x0, x1):
     err_abs = error_absoluto(x0,x1)
     return err_abs if(err_abs <= err) else err
+
+
     
     
