@@ -40,7 +40,7 @@ def secante(df,fx,p0,p1,count):
     # Para evitar una división por cero se le suma una cantidad mínima al dividendo
     # en caso de ser cero para evitar errores pero a la vez no perjudicar el cálculo.
     if(dividendo == 0):
-        dividendo = 10*-10
+        dividendo = 10**-10
 
     p2 = p1 - (fx(p1)*(p1-p0)) / dividendo
 
