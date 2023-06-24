@@ -2,8 +2,9 @@ from matplotlib import pyplot as plt
 import pandas as pd
 import numpy as np
 from Equation import Expression
+from sympy import symbols
 
-from algorithms import newton_mas_secante
+from algorithms import newton_mas_secante, derivada
 from exceptions import validate_err
 
 msg =  """
@@ -52,6 +53,7 @@ msg =  """
 print(msg)
 
 # Defino la función y su derivada como una expresión simbólica.
+x = symbols('x')
 fx = Expression('x**(3)-0.5*x**(2)-5.5*x+3', ['x'])
 fxp = Expression('3*x**2-x-5.5', ['x'])
 

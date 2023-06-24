@@ -1,5 +1,6 @@
 from Equation import Expression
 import pandas as pd
+from sympy import diff, symbols
 
 # Combina los algoritmos de la secante y newton-raphson
 def newton_mas_secante(fx, fxp, x0, x1, err):
@@ -26,6 +27,10 @@ def newton_mas_secante(fx, fxp, x0, x1, err):
         c += 1
 
     return (datos, x1)
+
+def derivada(fx):
+    x = symbols('x')
+    return diff(fx, x)
 
 def newtonraphson(df,fx,fxp,p0,count):
     p1 = p0 - (fx(p0))/fxp(p0)
