@@ -54,8 +54,9 @@ print(msg)
 
 # Defino la función y su derivada como una expresión simbólica.
 x = symbols('x')
-fx = Expression('x**(3)-0.5*x**(2)-5.5*x+3', ['x'])
-fxp = Expression('3*x**2-x-5.5', ['x'])
+fx = x**(3)-0.5*x**(2)-5.5*x+3
+fxp = Expression(str(derivada(fx)), ['x'])
+fx = Expression(str(fx), ['x'])
 
 # Pido rango inicial de búsqueda y una cota de error.
 # No importa el orden de los valores en el rango (x0 > x1 y x1 >0 son rangos válidos).
